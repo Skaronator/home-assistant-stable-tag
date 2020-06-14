@@ -78,6 +78,10 @@ def get_last_stable(tags: list):
 
   stable_tag = ".".join(str(x) for x in stable_version)
   print('get_last_stable(): stable_tag {}'.format(stable_tag))
+
+  if (max(stable_version) == 0):
+    raise Exception('Unable to find any penultimate version!')
+
   return stable_tag
 
 
