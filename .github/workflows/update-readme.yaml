@@ -1,0 +1,20 @@
+
+
+name: "Sync Docker Hub Readme"
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  readme:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: meeDamian/sync-readme@v1.0.6
+      with:
+        pass: ${{ secrets.DOCKER_PASS }}
+        description: true
+
+
+    
