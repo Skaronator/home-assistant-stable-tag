@@ -87,18 +87,25 @@ def pull_push_image(tag: str):
   login = client.login(username=DOCKER_USERNAME, password=DOCKER_PASSWORD)
   print('get_last_stable(): docker login {}'.format(login))
 
+  # Pull Upstream Image
   hass_tag = '{}:{}'.format(ORIGINAL_IMAGE, tag)
   print('get_last_stable(): docker pull {}'.format(hass_tag))
-  image = client.images.pull(hass_tag)
+  origin = client.images.pull(hass_tag)
+
+  # Pull own image
+  print('get_last_stable(): docker pull {}'.format(CUSTOM_IMAGE_TAG))
+  custom = client.images.pull(CUSTOM_IMAGE_TAG)
+
+  if (origin.id == custom.id):
+    print('get_last_stable(): id matches, nothing to update {}'.format(origin.id))
+    return True
 
   print('get_last_stable(): docker tag {}'.format(CUSTOM_IMAGE_TAG))
-  image.tag(CUSTOM_IMAGE_TAG)
+  origin.tag(CUSTOM_IMAGE_TAG)
 
   print('get_last_stable(): docker push {}'.format(CUSTOM_IMAGE_TAG))
   for line in client.images.push(CUSTOM_IMAGE_TAG, stream=True, decode=True):
     print(line)
-
-  return True
 
 
 if __name__ == '__main__':
