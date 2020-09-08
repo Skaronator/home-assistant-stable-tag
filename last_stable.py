@@ -113,10 +113,10 @@ def pull_push_image(tag: str):
 
 
 if __name__ == '__main__':
-  # We just get the last 5 pages. Usually 2 is enough and/or the logic could be improve
+  # We just get the last 10 pages. Usually 2 is enough and/or the logic could be improve
   # to load only as many pages as we need but honestly this is fine
   tags = []
-  for x in range(1, 6):
+  for x in range(1, 11):
     tags += get_tags(x)
 
   tag = get_last_stable(tags)
